@@ -1,7 +1,10 @@
-# SQL Queries with CASE, RIGHT, LEFT, TRIM & CEILING Functions to clean up data
+# SQL Queries with ROUND, CASE, RIGHT, LEFT, TRIM & CEILING Functions to clean up data
 
 
-SELECT
+SELECT PassengerID,
+	Ticket,
+-- Round 2 decimals
+	ROUND(Fare, 2) as Fare,
 -- Creating a new column for first & last names
 	TRIM(RIGHT(name, LEN(name) - CHARINDEX(',',name))) as First_Name,
 	TRIM(LEFT(name,CHARINDEX(',', name)-1)) as Last_Name,
