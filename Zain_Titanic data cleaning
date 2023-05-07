@@ -1,1 +1,40 @@
+# SQL Queries with CASE, RIGHT, LEFT, TRIM & CEILING Functions to clean up data
 
+
+SELECT
+-- Creating a new column for first & last names
+	TRIM(RIGHT(name, LEN(name) - CHARINDEX(',',name))) as First_Name,
+	TRIM(LEFT(name,CHARINDEX(',', name)-1)) as Last_Name,
+-- Changing Pclass to Cabin Class
+	CASE Pclass
+	WHEN 1 THEN 'First Class'
+	WHEN 2 THEN 'Second Class'
+	WHEN 3 THEN 'Third Class'
+	ELSE 'Unknown'
+	END as 'Cabin Class',
+-- Change case for sex to gender
+	CASE sex
+	WHEN 'male' THEN 'Male'
+	ELSE 'Female'
+	END as 'Gender',
+-- Create age group for 5 & 10 years ceiling
+	Age,
+	CEILING(Age/5)*5 as five_year_ceiling,
+	CEILING(Age/10)*10 as ten_year_ceiling,
+	sibsp,
+	parch,
+-- Create family size column
+	(sibsp + parch + 1) as Family_size,
+-- Expand departure port
+	CASE Embarked
+	WHEN 'Q' THEN 'Queenstown'
+	WHEN 'C' THEN 'Cherbourg'
+	WHEN 'S' THEN 'Southampton'
+	ELSE 'Not recorded'
+	END as Embarked,
+-- Did this person survive or died
+	CASE Survived
+	WHEN '0' THEN 'Died'
+	WHEN '1' THEN 'Survived'
+	END as Survived
+FROM titanic
